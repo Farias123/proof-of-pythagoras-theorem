@@ -1,0 +1,10 @@
+canvas{
+	border: 1px solid black;
+}
+div.bar{
+	padding: 0% 19%;
+	display: inline;
+}
+p{
+	padding: 10px;
+}
