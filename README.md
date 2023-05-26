@@ -1,1 +1,1 @@
-# final-project-introduction-to-computational-physics
+# final-project-intro-to-computational-physics
