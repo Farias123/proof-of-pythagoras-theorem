@@ -35,6 +35,27 @@ function drawTriangle(cat1, cat2){
 		ctx.moveTo(width/2-cat1/2, height/2+cat2/2);
 		ctx.lineTo(width/2+cat1/2, height/2-cat2/2);
 		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.moveTo(width/2+cat1/2, height/2-cat2/2);
+		ctx.lineTo(width/2+cat1/2+cat2/1, height/2-cat2/2);
+		ctx.lineTo(width/2+cat1/2+cat2/1, height/2+cat2/2);
+		ctx.lineTo(width/2+cat1/2, height/2+cat2/2);
+		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.moveTo(width/2-cat1/2, height/2+cat2/2);
+		ctx.lineTo(width/2-cat1/2, height/2+cat2/2+cat1/1);
+		ctx.lineTo(width/2+cat1/2, height/2+cat2/2+cat1/1);
+		ctx.lineTo(width/2+cat1/2, height/2+cat2/2);
+		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.moveTo(width/2+cat1/2, height/2-cat2/2);
+		ctx.lineTo(width/2+cat1/2-cat2/1, height/2-cat2/2-cat1/1);
+		ctx.lineTo(width/2-cat1/2-cat2/1, height/2+cat2/2-cat1/1);
+		ctx.lineTo(width/2-cat1/2, height/2+cat2/2);
+		ctx.stroke();
 	}
 	
 
