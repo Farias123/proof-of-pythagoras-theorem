@@ -156,7 +156,7 @@ function update(){
 	let cat1 = document.getElementById("cathetus1").value;
 	let cat2 = document.getElementById("cathetus2").value;
 	let hyp = getHypotenuse(cat1, cat2);
-
+	
 	deltaL1 = 0, deltaL2 = 0, deltaL3 = 0;
 	
 	xTop = width/2+cat1/2-cat2/1, yTop = height/2-cat2/2-cat1/1;
@@ -165,9 +165,14 @@ function update(){
 	xBottom = width/2-cat1/2, yBottom = height/2+cat2/2;
 	
 	if(triangleExists(cat1, cat2)){
-		document.getElementById("span").innerHTML = "Representação de um triângulo com catetos de tamanho: "+ cat1 +" e " + cat2 +", com hipotenusa de "+ hyp.toFixed(2) +". Todos na mesma unidade de medida."
+		document.getElementById("cat1").innerHTML = cat1;
+		document.getElementById("cat2").innerHTML = cat2;
+		document.getElementById("hyp").innerHTML = hyp.toFixed(2);
 		
-		drawTriangleAndSquares(cat1, cat2);
+		document.getElementById("cat1Square").innerHTML = cat1**2;
+		document.getElementById("cat2Square").innerHTML = cat2**2;
+		document.getElementById("hypSquare").innerHTML = Math.round(hyp**2);
+		
 		
 		beta = Math.atan2(cat1,cat2);
 		alpha = Math.PI/2-beta;
