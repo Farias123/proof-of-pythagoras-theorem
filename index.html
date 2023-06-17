@@ -4,15 +4,16 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="final-project.css" media="screen"/>
-
+	<link rel="icon" href="icon.png">
+	<title id="title">Teorema de Pitágoras</title>
 </head>
 
 <body>
 
 <div class="container">
 	<h1 align="center">Prova do Teorema de Pitágoras</h1>	
-	<blockquote>Em qualquer triângulo retângulo, a área do quadrado cujo lado é a hipotenusa é igual à soma das áreas dos quadrados cujos lados são os catetos.</blockquote> 
-	<p>Para que essa constatação seja provada</p>
+	<blockquote>Em qualquer triângulo retângulo, a área do quadrado cujo lado é a <var>hipotenusa</var> é igual à soma das áreas dos quadrados cujos lados são os <var>catetos</var>.</blockquote> 
+	<p>Para que essa constatação seja provada será feito um experimento virtual, onde uma certa quantidade de água é toda depositada no quadrado com lado igual à <var>hipotenusa</var> do triângulo, posteriormente a água será escoada para os dois quadrados de lado</p>
 	
 	<div align="center">
 		<canvas id="cnv" width="500" height="500"><canvas>
@@ -26,10 +27,7 @@
 		<input type="range" min="0" max="150" id="cathetus2" onInput="update()" value="100">	
 	</div>
 
-	<p align="center"><var id="cat1"></var> <sup>2</sup> + <var id="cat2"></var> <sup>2</sup> = <var id="hyp"></var> <sup>2</sup>
-	<br>
-	<var id="cat1Square"></var> + <var id="cat2Square"></var> = <var id="hypSquare"></var>
-	</p>
+	<p align="center" id="message-text"></p>
 
 <script src="final-project.js"></script>
 </div>

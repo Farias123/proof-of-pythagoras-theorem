@@ -8,7 +8,8 @@ let waterMovement;
 let xTop, yTop, xLeft, yLeft, xRight, yRight, xBottom, yBottom;
 let deltaL1 = 0, deltaL2 = 0, deltaL3 = 0, deltaL4;
 let alpha, beta;
-ctx.fillStyle = "blue";
+ctx.fillStyle = "rgb(0,0,255)";
+
 function getHypotenuse(cat1, cat2){
 	let res = cat1**2 + cat2**2;
 	res = Math.sqrt(res);
@@ -18,7 +19,7 @@ function getHypotenuse(cat1, cat2){
 function triangleExists(cat1, cat2){
 	let hyp = getHypotenuse(cat1, cat2);
 	
-	if(hyp > Math.abs(cat1 - cat2) && hyp < cat1 + cat2 && cat1 >= 10 && cat2 >= 10){
+	if(hyp > Math.abs(cat1 - cat2) && hyp < cat1 + cat2 && cat1 > 10 && cat2 > 10){
 		return true;	
 	}
 	return false;
@@ -165,15 +166,7 @@ function update(){
 	xBottom = width/2-cat1/2, yBottom = height/2+cat2/2;
 	
 	if(triangleExists(cat1, cat2)){
-		document.getElementById("cat1").innerHTML = cat1;
-		document.getElementById("cat2").innerHTML = cat2;
-		document.getElementById("hyp").innerHTML = hyp.toFixed(2);
-		
-		document.getElementById("cat1Square").innerHTML = cat1**2;
-		document.getElementById("cat2Square").innerHTML = cat2**2;
-		document.getElementById("hypSquare").innerHTML = Math.round(hyp**2);
-		
-		
+		document.getElementById("message-text").innerHTML = `<var>${cat1}</var> <sup>2</sup> + <var>${cat2}</var> <sup>2</sup> = <var>${hyp.toFixed(2)}</var> <sup>2</sup><br><var>${cat1**2}</var> + <var>${cat2**2}</var> = <var>${Math.round(hyp**2)}</var>`
 		beta = Math.atan2(cat1,cat2);
 		alpha = Math.PI/2-beta;
 		
@@ -185,7 +178,7 @@ function update(){
 
 	} else {
 		clearInterval(waterMovement);
-		document.getElementById("span").innerHTML = "Configuração inválida.";
+		document.getElementById("message-text").innerHTML = "Configuração inválida.";
 	}	
 }
 
