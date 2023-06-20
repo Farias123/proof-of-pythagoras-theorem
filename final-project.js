@@ -16,47 +16,35 @@ function getHypotenuse(cat1, cat2){
 	return res;
 }
 
-function triangleExists(cat1, cat2){
-	let hyp = getHypotenuse(cat1, cat2);
-	
-	if(hyp > Math.abs(cat1 - cat2) && hyp < cat1 + cat2 && cat1 > 10 && cat2 > 10){
-		return true;	
-	}
-	return false;
-}
-
 function drawTriangleAndSquares(cat1, cat2){
 	ctx.clearRect(0,0,width,height);
-
-	if(triangleExists(cat1, cat2)){
-		ctx.beginPath();
-		ctx.moveTo(xBottom, yBottom);
-		ctx.lineTo(xRight, yBottom);
-		ctx.lineTo(xRight, yRight);
-		ctx.lineTo(xBottom, yBottom);
-		ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(xBottom, yBottom);
+	ctx.lineTo(xRight, yBottom);
+	ctx.lineTo(xRight, yRight);
+	ctx.lineTo(xBottom, yBottom);
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.moveTo(xRight, yRight);
+	ctx.lineTo(xRight+cat2/1, yRight);
+	ctx.lineTo(xRight+cat2/1, yBottom);
+	ctx.lineTo(xRight, yBottom);
+	ctx.stroke();
 		
-		ctx.beginPath();
-		ctx.moveTo(xRight, yRight);
-		ctx.lineTo(xRight+cat2/1, yRight);
-		ctx.lineTo(xRight+cat2/1, yBottom);
-		ctx.lineTo(xRight, yBottom);
-		ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(xBottom, yBottom);
+	ctx.lineTo(xBottom, yBottom+cat1/1);
+	ctx.lineTo(xRight, yBottom+cat1/1);
+	ctx.lineTo(xRight, yBottom);
+	ctx.stroke();
 		
-		ctx.beginPath();
-		ctx.moveTo(xBottom, yBottom);
-		ctx.lineTo(xBottom, yBottom+cat1/1);
-		ctx.lineTo(xRight, yBottom+cat1/1);
-		ctx.lineTo(xRight, yBottom);
-		ctx.stroke();
-		
-		ctx.beginPath();
-		ctx.moveTo(xRight, yRight);
-		ctx.lineTo(xTop, yTop);
-		ctx.lineTo(xLeft, yLeft);
-		ctx.lineTo(xBottom, yBottom);
-		ctx.stroke();
-	}
+	ctx.beginPath();
+	ctx.moveTo(xRight, yRight);
+	ctx.lineTo(xTop, yTop);
+	ctx.lineTo(xLeft, yLeft);
+	ctx.lineTo(xBottom, yBottom);
+	ctx.stroke();
 }
 
 function getBase(deltaL){
@@ -165,21 +153,17 @@ function update(){
 	xRight = width/2+cat1/2, yRight = height/2-cat2/2;
 	xBottom = width/2-cat1/2, yBottom = height/2+cat2/2;
 	
-	if(triangleExists(cat1, cat2)){
-		document.getElementById("message-text").innerHTML = `<var>${cat1}</var> <sup>2</sup> + <var>${cat2}</var> <sup>2</sup> = <var>${hyp.toFixed(2)}</var> <sup>2</sup><br><var>${cat1**2}</var> + <var>${cat2**2}</var> = <var>${Math.round(hyp**2)}</var>`
-		beta = Math.atan2(cat1,cat2);
-		alpha = Math.PI/2-beta;
+	document.getElementById("message-text").innerHTML = `<var>${cat1}</var> <sup>2</sup> + <var>${cat2}</var> <sup>2</sup> = <var>${hyp.toFixed(2)}</var> <sup>2</sup><br><var>${cat1**2}</var> + <var>${cat2**2}</var> = <var>${cat1**2+cat2**2}</var>`
+	beta = Math.atan2(cat1,cat2);
+	alpha = Math.PI/2-beta;
 		
-		clearInterval(waterMovement);
-		t = 0;
+	clearInterval(waterMovement);
+	t = 0;
 		
-		waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);
-
-
-	} else {
-		clearInterval(waterMovement);
-		document.getElementById("message-text").innerHTML = "Configuração inválida.";
-	}	
+	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);	
 }
 
+document.getElementById("cathetus1").value = 150;
+document.getElementById("cathetus2").value = 150;
 update();
+setTimeout(clearInterval,10,waterMovement);
