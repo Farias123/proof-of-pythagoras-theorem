@@ -1,8 +1,18 @@
+body{
+	background-color: #ddffdd;
+}
+.container{
+	max-width: 960px;
+	padding-inline: 20px;
+	margin-inline: auto;
+}
 canvas{
 	border: 1px solid black;
+	border-radius: 5%;
+	background-color: white;
 }
-div.bar{
-	padding: 0% 15%;
+.bar{
+	padding-inline: 5px;
 	display: inline;
 }
 p{

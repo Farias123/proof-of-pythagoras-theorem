@@ -8,54 +8,43 @@ let waterMovement;
 let xTop, yTop, xLeft, yLeft, xRight, yRight, xBottom, yBottom;
 let deltaL1 = 0, deltaL2 = 0, deltaL3 = 0, deltaL4;
 let alpha, beta;
-ctx.fillStyle = "blue";
+ctx.fillStyle = "rgb(0,0,255)";
+
 function getHypotenuse(cat1, cat2){
 	let res = cat1**2 + cat2**2;
 	res = Math.sqrt(res);
 	return res;
 }
 
-function triangleExists(cat1, cat2){
-	let hyp = getHypotenuse(cat1, cat2);
-	
-	if(hyp > Math.abs(cat1 - cat2) && hyp < cat1 + cat2 && cat1 >= 10 && cat2 >= 10){
-		return true;	
-	}
-	return false;
-}
-
 function drawTriangleAndSquares(cat1, cat2){
 	ctx.clearRect(0,0,width,height);
-
-	if(triangleExists(cat1, cat2)){
-		ctx.beginPath();
-		ctx.moveTo(xBottom, yBottom);
-		ctx.lineTo(xRight, yBottom);
-		ctx.lineTo(xRight, yRight);
-		ctx.lineTo(xBottom, yBottom);
-		ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(xBottom, yBottom);
+	ctx.lineTo(xRight, yBottom);
+	ctx.lineTo(xRight, yRight);
+	ctx.lineTo(xBottom, yBottom);
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.moveTo(xRight, yRight);
+	ctx.lineTo(xRight+cat2/1, yRight);
+	ctx.lineTo(xRight+cat2/1, yBottom);
+	ctx.lineTo(xRight, yBottom);
+	ctx.stroke();
 		
-		ctx.beginPath();
-		ctx.moveTo(xRight, yRight);
-		ctx.lineTo(xRight+cat2/1, yRight);
-		ctx.lineTo(xRight+cat2/1, yBottom);
-		ctx.lineTo(xRight, yBottom);
-		ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(xBottom, yBottom);
+	ctx.lineTo(xBottom, yBottom+cat1/1);
+	ctx.lineTo(xRight, yBottom+cat1/1);
+	ctx.lineTo(xRight, yBottom);
+	ctx.stroke();
 		
-		ctx.beginPath();
-		ctx.moveTo(xBottom, yBottom);
-		ctx.lineTo(xBottom, yBottom+cat1/1);
-		ctx.lineTo(xRight, yBottom+cat1/1);
-		ctx.lineTo(xRight, yBottom);
-		ctx.stroke();
-		
-		ctx.beginPath();
-		ctx.moveTo(xRight, yRight);
-		ctx.lineTo(xTop, yTop);
-		ctx.lineTo(xLeft, yLeft);
-		ctx.lineTo(xBottom, yBottom);
-		ctx.stroke();
-	}
+	ctx.beginPath();
+	ctx.moveTo(xRight, yRight);
+	ctx.lineTo(xTop, yTop);
+	ctx.lineTo(xLeft, yLeft);
+	ctx.lineTo(xBottom, yBottom);
+	ctx.stroke();
 }
 
 function getBase(deltaL){
@@ -156,7 +145,7 @@ function update(){
 	let cat1 = document.getElementById("cathetus1").value;
 	let cat2 = document.getElementById("cathetus2").value;
 	let hyp = getHypotenuse(cat1, cat2);
-
+	
 	deltaL1 = 0, deltaL2 = 0, deltaL3 = 0;
 	
 	xTop = width/2+cat1/2-cat2/1, yTop = height/2-cat2/2-cat1/1;
@@ -164,24 +153,17 @@ function update(){
 	xRight = width/2+cat1/2, yRight = height/2-cat2/2;
 	xBottom = width/2-cat1/2, yBottom = height/2+cat2/2;
 	
-	if(triangleExists(cat1, cat2)){
-		document.getElementById("span").innerHTML = "Representação de um triângulo com catetos de tamanho: "+ cat1 +" e " + cat2 +", com hipotenusa de "+ hyp.toFixed(2) +". Todos na mesma unidade de medida."
+	document.getElementById("message-text").innerHTML = `<var>${cat1}</var> <sup>2</sup> + <var>${cat2}</var> <sup>2</sup> = <var>${hyp.toFixed(2)}</var> <sup>2</sup><br><var>${cat1**2}</var> + <var>${cat2**2}</var> = <var>${cat1**2+cat2**2}</var>`
+	beta = Math.atan2(cat1,cat2);
+	alpha = Math.PI/2-beta;
 		
-		drawTriangleAndSquares(cat1, cat2);
+	clearInterval(waterMovement);
+	t = 0;
 		
-		beta = Math.atan2(cat1,cat2);
-		alpha = Math.PI/2-beta;
-		
-		clearInterval(waterMovement);
-		t = 0;
-		
-		waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);
-
-
-	} else {
-		clearInterval(waterMovement);
-		document.getElementById("span").innerHTML = "Configuração inválida.";
-	}	
+	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);	
 }
 
+document.getElementById("cathetus1").value = 150;
+document.getElementById("cathetus2").value = 150;
 update();
+setTimeout(clearInterval,10,waterMovement);
