@@ -1,13 +1,12 @@
-let t = 0;
-let dt = 0.01;
+let t = 0, dt = 0.01;
 let cnv = document.getElementById("cnv");
 let ctx = cnv.getContext("2d");
-let width = cnv.width;
-let height = cnv.height;
+let width = cnv.width, height = cnv.height;
 let waterMovement;
 let xTop, yTop, xLeft, yLeft, xRight, yRight, xBottom, yBottom;
-let deltaL1 = 0, deltaL2 = 0, deltaL3 = 0, deltaL4;
+let deltaL1, deltaL2, deltaL3, deltaL4;
 let alpha, beta;
+let flowRate, flowRateSquare1, flowRateSquare2;
 ctx.fillStyle = "rgb(0,0,255)";
 
 function getHypotenuse(cat1, cat2){
@@ -53,9 +52,6 @@ function getBase(deltaL){
 }
 
 function passTime(cat1, cat2, hyp, alpha, beta){
-	let flowRate = (hyp**2)/10;
-	let flowRateSquare1 = (cat1**2/hyp**2)*flowRate;
-	let flowRateSquare2 = (cat2**2/hyp**2)*flowRate;
 	let deltaH1 = flowRateSquare1*t/cat1;
 	let deltaH2 = flowRateSquare2*t/cat2;
 
@@ -141,6 +137,36 @@ function passTime(cat1, cat2, hyp, alpha, beta){
 	t+=dt
 }
 
+class Graphic{
+	constructor(id){
+		this.id = id;
+		this.xValues = [];
+		this.yValues = [];
+		function hypVolume(t){return hyp**2-flowRate*t};
+		function catVolume(t,x){ 
+			if (x === 1){
+				return flowRateSquare1*t;
+			}else if (x === 2){
+				return flowRateSquare2*t;
+			}};
+		for(t=0;t<=10;t+=1){
+			this.xValues.push(t);
+			if(this.id==="hyp"){
+				this.yValues.push(hypVolume(t));
+				this.type = "hipotenusa";
+			}else if(this.id==="cat1"){
+				this.yValues.push(catVolume(t,1));
+				this.type = "cateto";
+			}else if(this.id==="cat2"){
+				this.yValues.push(catVolume(t,2));
+				this.type = "cateto";
+			}
+		}
+		this.data = [{x:this.xValues, y:this.yValues, mode: "lines"}];
+		
+	}
+}
+
 function update(){
 	let cat1 = document.getElementById("cathetus1").value;
 	let cat2 = document.getElementById("cathetus2").value;
@@ -160,6 +186,15 @@ function update(){
 	clearInterval(waterMovement);
 	t = 0;
 		
+	flowRate = (hyp**2)/10;
+	flowRateSquare1 = (cat1**2/hyp**2)*flowRate;
+	flowRateSquare2 = (cat2**2/hyp**2)*flowRate;
+
+	//espaço para plotar gráficos
+
+	let hypChart = document.getElementById("hypChart");
+	Plotly.newPlot(hypChart,[])
+
 	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);	
 }
 
