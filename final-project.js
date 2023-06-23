@@ -37,7 +37,6 @@ function drawTriangleAndSquares(cat1, cat2){
 	ctx.lineTo(xRight, yBottom+cat1/1);
 	ctx.lineTo(xRight, yBottom);
 	ctx.stroke();
-		
 	ctx.beginPath();
 	ctx.moveTo(xRight, yRight);
 	ctx.lineTo(xTop, yTop);
@@ -137,36 +136,6 @@ function passTime(cat1, cat2, hyp, alpha, beta){
 	t+=dt
 }
 
-class Graphic{
-	constructor(id){
-		this.id = id;
-		this.xValues = [];
-		this.yValues = [];
-		function hypVolume(t){return hyp**2-flowRate*t};
-		function catVolume(t,x){ 
-			if (x === 1){
-				return flowRateSquare1*t;
-			}else if (x === 2){
-				return flowRateSquare2*t;
-			}};
-		for(t=0;t<=10;t+=1){
-			this.xValues.push(t);
-			if(this.id==="hyp"){
-				this.yValues.push(hypVolume(t));
-				this.type = "hipotenusa";
-			}else if(this.id==="cat1"){
-				this.yValues.push(catVolume(t,1));
-				this.type = "cateto";
-			}else if(this.id==="cat2"){
-				this.yValues.push(catVolume(t,2));
-				this.type = "cateto";
-			}
-		}
-		this.data = [{x:this.xValues, y:this.yValues, mode: "lines"}];
-		
-	}
-}
-
 function update(){
 	let cat1 = document.getElementById("cathetus1").value;
 	let cat2 = document.getElementById("cathetus2").value;
@@ -189,15 +158,29 @@ function update(){
 	flowRate = (hyp**2)/10;
 	flowRateSquare1 = (cat1**2/hyp**2)*flowRate;
 	flowRateSquare2 = (cat2**2/hyp**2)*flowRate;
-
-	//espaço para plotar gráficos
-
-	let hypChart = document.getElementById("hypChart");
-	Plotly.newPlot(hypChart,[])
-
-	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);	
+	
+	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);
+	
+	let dataHyp = [{x:[],y:[],mode:"lines"}];
+	let dataCat1 = [{x:[],y:[],mode:"lines"}];
+	let dataCat2 = [{x:[],y:[],mode:"lines"}];
+	for(let time = 0;time<=10;time+=1){
+		dataHyp[0].x[time] = dataCat1[0].x[time] = dataCat2[0].x[time] = time;
+		dataHyp[0].y[time] = hyp**2-flowRate*time;
+		dataCat1[0].y[time] = flowRateSquare1*time;
+		dataCat2[0].y[time] = flowRateSquare2*time;
+	}
+	let layout = {
+			xaxis:{title:"Tempo(s)"},
+			yaxis:{title:"Volume(px<sup>3</sup>)"},
+			title: "Volume de água no quadrado da hipotenusa"
+		};
+	Plotly.newPlot("hypChart", dataHyp, layout);
+	layout.title = "Volume de água no quadrado do cateto 1"
+	Plotly.newPlot("cat1Chart",dataCat1, layout);
+	layout.title = "Volume de água no quadrado do cateto 2"
+	Plotly.newPlot("cat2Chart",dataCat2, layout);
 }
-
 document.getElementById("cathetus1").value = 150;
 document.getElementById("cathetus2").value = 150;
 update();

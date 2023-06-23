@@ -18,3 +18,7 @@ canvas{
 p{
 	padding: 10px;
 }
+.chart{
+	max-width:350px;
+	display: inline-block;
+}
