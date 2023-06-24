@@ -54,7 +54,7 @@ function passTime(cat1, cat2, hyp, alpha, beta){
 	let deltaH1 = flowRateSquare1*t/cat1;
 	let deltaH2 = flowRateSquare2*t/cat2;
 
-	if(t<10){
+	if(t<=10){
 		drawTriangleAndSquares(cat1, cat2);
 		let x = hyp*Math.sin(beta)/Math.sin(alpha);
 		ctx.beginPath();
@@ -161,25 +161,19 @@ function update(){
 	
 	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);
 	
-	let dataHyp = [{x:[],y:[],mode:"lines"}];
-	let dataCat1 = [{x:[],y:[],mode:"lines"}];
-	let dataCat2 = [{x:[],y:[],mode:"lines"}];
+	let data = [{x:[],y:[],mode:"lines", name:"Hipotenusa"}, {x:[],y:[],mode:"lines", name:"Cateto 1"},{x:[],y:[],mode:"lines", name:"Cateto 2"}];
 	for(let time = 0;time<=10;time+=1){
-		dataHyp[0].x[time] = dataCat1[0].x[time] = dataCat2[0].x[time] = time;
-		dataHyp[0].y[time] = hyp**2-flowRate*time;
-		dataCat1[0].y[time] = flowRateSquare1*time;
-		dataCat2[0].y[time] = flowRateSquare2*time;
+		data[0].x[time] = data[1].x[time] = data[2].x[time] = time;
+		data[0].y[time] = hyp**2-flowRate*time;
+		data[1].y[time] = flowRateSquare1*time;
+		data[2].y[time] = flowRateSquare2*time;
 	}
 	let layout = {
 			xaxis:{title:"Tempo(s)"},
 			yaxis:{title:"Volume(px<sup>3</sup>)"},
-			title: "Volume de água no quadrado da hipotenusa"
+			title: "Volume de água nos quadrados"
 		};
-	Plotly.newPlot("hypChart", dataHyp, layout);
-	layout.title = "Volume de água no quadrado do cateto 1"
-	Plotly.newPlot("cat1Chart",dataCat1, layout);
-	layout.title = "Volume de água no quadrado do cateto 2"
-	Plotly.newPlot("cat2Chart",dataCat2, layout);
+	Plotly.react("chart", data, layout);
 }
 document.getElementById("cathetus1").value = 150;
 document.getElementById("cathetus2").value = 150;
