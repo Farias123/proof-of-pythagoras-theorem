@@ -5,6 +5,7 @@ body{
 	max-width: 960px;
 	padding-inline: 20px;
 	margin-inline: auto;
+	margin: auto;
 }
 canvas{
 	border: 1px solid black;

@@ -1,20 +1,14 @@
-let t = 0;
-let dt = 0.01;
+let t = 0, dt = 0.01;
 let cnv = document.getElementById("cnv");
 let ctx = cnv.getContext("2d");
-let width = cnv.width;
-let height = cnv.height;
+let width = cnv.width, height = cnv.height;
 let waterMovement;
 let xTop, yTop, xLeft, yLeft, xRight, yRight, xBottom, yBottom;
-let deltaL1 = 0, deltaL2 = 0, deltaL3 = 0, deltaL4;
+let deltaL1, deltaL2, deltaL3, deltaL4;
 let alpha, beta;
+let flowRate, flowRateSquare1, flowRateSquare2;
+let data, layout;
 ctx.fillStyle = "rgb(0,0,255)";
-
-function getHypotenuse(cat1, cat2){
-	let res = cat1**2 + cat2**2;
-	res = Math.sqrt(res);
-	return res;
-}
 
 function drawTriangleAndSquares(cat1, cat2){
 	ctx.clearRect(0,0,width,height);
@@ -38,7 +32,6 @@ function drawTriangleAndSquares(cat1, cat2){
 	ctx.lineTo(xRight, yBottom+cat1/1);
 	ctx.lineTo(xRight, yBottom);
 	ctx.stroke();
-		
 	ctx.beginPath();
 	ctx.moveTo(xRight, yRight);
 	ctx.lineTo(xTop, yTop);
@@ -53,13 +46,10 @@ function getBase(deltaL){
 }
 
 function passTime(cat1, cat2, hyp, alpha, beta){
-	let flowRate = (hyp**2)/10;
-	let flowRateSquare1 = (cat1**2/hyp**2)*flowRate;
-	let flowRateSquare2 = (cat2**2/hyp**2)*flowRate;
 	let deltaH1 = flowRateSquare1*t/cat1;
 	let deltaH2 = flowRateSquare2*t/cat2;
 
-	if(t<10){
+	if(t<=10){
 		drawTriangleAndSquares(cat1, cat2);
 		let x = hyp*Math.sin(beta)/Math.sin(alpha);
 		ctx.beginPath();
@@ -112,7 +102,6 @@ function passTime(cat1, cat2, hyp, alpha, beta){
 				ctx.lineTo(xRight-(hyp-deltaL4)*Math.cos(alpha),yRight+(hyp-deltaL4)*Math.sin(alpha));
 				ctx.lineTo(xLeft+(hyp-deltaL4)*Math.cos(alpha),yRight+(hyp-deltaL4)*Math.sin(alpha));
 			}
-
 		}
 		ctx.lineTo(xLeft,yLeft);
 		ctx.lineTo(xBottom,yBottom);
@@ -144,7 +133,7 @@ function passTime(cat1, cat2, hyp, alpha, beta){
 function update(){
 	let cat1 = document.getElementById("cathetus1").value;
 	let cat2 = document.getElementById("cathetus2").value;
-	let hyp = getHypotenuse(cat1, cat2);
+	let hyp = Math.sqrt(cat1**2 + cat2**2);
 	
 	deltaL1 = 0, deltaL2 = 0, deltaL3 = 0;
 	
@@ -152,7 +141,6 @@ function update(){
 	xLeft = xTop-cat1/1, yLeft = yTop+cat2/1;
 	xRight = width/2+cat1/2, yRight = height/2-cat2/2;
 	xBottom = width/2-cat1/2, yBottom = height/2+cat2/2;
-	
 	document.getElementById("message-text").innerHTML = `<var>${cat1}</var> <sup>2</sup> + <var>${cat2}</var> <sup>2</sup> = <var>${hyp.toFixed(2)}</var> <sup>2</sup><br><var>${cat1**2}</var> + <var>${cat2**2}</var> = <var>${cat1**2+cat2**2}</var>`
 	beta = Math.atan2(cat1,cat2);
 	alpha = Math.PI/2-beta;
@@ -160,9 +148,38 @@ function update(){
 	clearInterval(waterMovement);
 	t = 0;
 		
-	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);	
+	flowRate = (hyp**2)/10;
+	flowRateSquare1 = (cat1**2/hyp**2)*flowRate;
+	flowRateSquare2 = (cat2**2/hyp**2)*flowRate;
+	
+	waterMovement = setInterval(passTime,dt*1000, cat1, cat2, hyp, alpha, beta);
+	
+	data = [{x:[],y:[],mode:"lines", name:"Hipotenusa"}, {x:[],y:[],mode:"lines", name:"Cateto 1"},{x:[],y:[],mode:"lines", name:"Cateto 2"}];
+	for(let time = 0;time<=10;time+=1){
+		data[0].x[time] = data[1].x[time] = data[2].x[time] = time;
+		data[0].y[time] = hyp**2-flowRate*time;
+		data[1].y[time] = flowRateSquare1*time;
+		data[2].y[time] = flowRateSquare2*time;
+	}
+	layout = {
+			xaxis:{title:"Tempo(s)"},
+			yaxis:{title:"Volume(px<sup>3</sup>)"},
+			title: "Volume de água nos quadrados"
+		};
+	Plotly.react("chart", data, layout);
 }
 
+function resizeGraph(){
+	if(window.innerWidth >= 960/0.8){
+		layout.width = 960;
+	}else{
+		layout.width = 0.8*window.innerWidth;
+	}
+	Plotly.react("chart", data, layout);
+}
+
+window.onresize = resizeGraph;
+console.log(window.innerWidth);
 document.getElementById("cathetus1").value = 150;
 document.getElementById("cathetus2").value = 150;
 update();

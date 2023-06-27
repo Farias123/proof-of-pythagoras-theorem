@@ -4,6 +4,9 @@
 <head>
 	<meta charset="utf-8">
 	<script src="plotly.min.js"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
 	<link rel="stylesheet" type="text/css" href="final-project.css" media="screen"/>
 	<link rel="icon" href="icon.png">
 	<title id="title">Teorema de Pitágoras</title>
@@ -19,8 +22,11 @@
 	<p>Esse experimento virtual funciona de acordo com as seguintes condições:
 		<ul>
 			<li>A profundidade de todos os elementos é de 1, então podemos igualar volume e área.</li><br>
-			<li>A animação tem um tempo fixo de 10 segundos, então a <var>vazão</var> <var>V</var> do quadrado da <var>hipotenusa</var> será representada por: <var>V</var> = <var>hipotenusa</var><sup>2</sup>/10 (área/tempo).</li><br>
-			<li>A taxa de enchimento de cada quadrado dos catetos é representada por: <var>Vx</var> = <var>V</var>*<var>cateto_x</var><sup>2</sup>/<var>hipotenusa</var><sup>2</sup>. Sendo que <var>V</var> é a <var>vazão</var> definida no item anterior e <var>Vx</var> é a taxa de enchimento do quadrado do <var>cateto x</var>. Assim o enchimento de cada quadrado é proporcional à sua área, então eles terminarão de encher juntos.</li><br>
+			<li>A animação tem um tempo fixo de 10 segundos, então a <var>vazão</var> <var>V</var> do quadrado da <var>hipotenusa</var> será representada por: 
+			$$ V = \frac{hipotenusa^{2}}{10}$$</li>
+			<li>A taxa de enchimento de cada quadrado dos catetos é representada por: 
+			$$ Vx = V \frac{cateto\underline{\space}x^2}{hipotenusa^2}$$
+			Sendo que <var>V</var> é a <var>vazão</var> definida no item anterior e <var>Vx</var> é a taxa de enchimento do quadrado do <var>cateto_x</var>. Assim o enchimento de cada quadrado é proporcional à sua área, então eles terminarão de encher juntos.</li><br>
 			<li>O usuário pode escolher o comprimento que preferir para cada cateto, dentro do intervalo de 15 a 150 pixels.</li>
 		</ul>
 		Teste o experimento a seguir:
@@ -32,27 +38,30 @@
 
 	<div class="container" align="center">
 		<div class="bar" align="left">
-			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" value="100">	
+			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" value="150">	
 		</div>
 
 		<div class="bar" align="right">
-			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" value="100">	
+			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" value="150">	
 		</div>
 	</div>
 
 	<p align="center">Veja abaixo o teorema de Pitágoras aplicado aos catetos escolhidos:<br>
 	<span id="message-text"></span></p>
 </div>	
+
 <hr>
 
-<!--
 <div class="container">	
-	<p>Abaixo você pode conferir o gráficos de volume nos quadrados em função do tempo</p>
-	<div id="hypChart"></div>
-
-</div> 
+	<p align="center">Abaixo você pode conferir os gráficos de volume nos quadrados em função do tempo:</p>
+	<div class="container" align="center" id="chart"></div>
+</div>
+<hr>
+<!--
+<p>	$$  \Delta L1 = \sqrt{2\frac{vt}{\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
+	$$ \Delta L2 = -\frac{\Delta L1}{2}+\frac{vt}{\Delta L1\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
+</p>
 -->
-
 <script src="final-project.js"></script>
 </body>
 
