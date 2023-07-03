@@ -38,11 +38,11 @@
 
 	<div class="container" align="center">
 		<div class="bar" align="left">
-			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" value="150">	
+			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" onChange="drawGraph()" value="150">	
 		</div>
 
 		<div class="bar" align="right">
-			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" value="150">	
+			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" onChange="drawGraph()" value="150">	
 		</div>
 	</div>
 
@@ -53,13 +53,14 @@
 <hr>
 
 <div class="container">	
-	<p align="center">Abaixo você pode conferir os gráficos de volume nos quadrados em função do tempo:</p>
+	<p align="center">Abaixo você pode conferir o gráfico de volume nos quadrados em função do tempo (o gráfico é desenhado ao soltar a barra que determina o tamanho dos catetos):</p>
 	<div class="container" align="center" id="chart"></div>
 </div>
 <hr>
 
-<p>	
-	$$ \Delta L1 = \sqrt{2\frac{vt}{\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$ <img src="images/deltaL1.png"></img>
+<p class="container">	
+	Para que seja feita a animação do experimento virtual, precisam ser calculados os $\Delta L$, eles são importantes para encontrar a distância de um ponto relevante do quadrado até a água. O $\Delta L1$ 
+	$$ \Delta L1 = \sqrt{2\frac{vt}{\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
 	$$ \Delta L2 = -\frac{\Delta L1}{2}+\frac{vt}{\Delta L1\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
 	$$ \Delta L3 = -\frac{\Delta L1}{2}\frac{sin{\alpha}}{\sin{\beta}}+\frac{vt}{\Delta L1\sin{\beta}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
 	$$ \Delta L4 = \sqrt{\frac{2hyp^2-2vt}{sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
