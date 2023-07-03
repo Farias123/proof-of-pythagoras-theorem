@@ -157,7 +157,7 @@ function update(){
 	data = [{x:[],y:[],mode:"lines", name:"Hipotenusa"}, {x:[],y:[],mode:"lines", name:"Cateto 1"},{x:[],y:[],mode:"lines", name:"Cateto 2"}];
 	for(let time = 0;time<=10;time+=1){
 		data[0].x[time] = data[1].x[time] = data[2].x[time] = time;
-		data[0].y[time] = hyp**2-flowRate*time;
+		data[0].y[time] = (hyp**2-flowRate*time).toFixed(2);
 		data[1].y[time] = flowRateSquare1*time;
 		data[2].y[time] = flowRateSquare2*time;
 	}
@@ -166,10 +166,9 @@ function update(){
 			yaxis:{title:"Volume(px<sup>3</sup>)"},
 			title: "Volume de água nos quadrados"
 		};
-	Plotly.react("chart", data, layout);
 }
 
-function resizeGraph(){
+function drawGraph(){
 	if(window.innerWidth >= 960/0.8){
 		layout.width = 960;
 	}else{
@@ -178,9 +177,9 @@ function resizeGraph(){
 	Plotly.react("chart", data, layout);
 }
 
-window.onresize = resizeGraph;
-console.log(window.innerWidth);
+window.onresize = drawGraph;
 document.getElementById("cathetus1").value = 150;
 document.getElementById("cathetus2").value = 150;
 update();
+drawGraph();
 setTimeout(clearInterval,10,waterMovement);
