@@ -22,4 +22,6 @@ p{
 img{
 	border-radius: 5%;
 	border: 1px solid black;
+	width: 150px;
+	height: 150px;
 }
