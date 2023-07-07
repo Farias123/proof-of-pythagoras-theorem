@@ -53,18 +53,14 @@
 <hr>
 
 <div class="container">	
-	<p align="center">Abaixo você pode conferir o gráfico de volume nos quadrados em função do tempo (o gráfico é desenhado ao soltar a barra que determina o tamanho dos catetos):</p>
+	<p>Abaixo você pode conferir o gráfico de volume nos quadrados em função do tempo (o gráfico é desenhado somente ao soltar a barra que determina o tamanho dos catetos):</p>
 	<div class="container" align="center" id="chart"></div>
+	<p>Note que a soma do volume da água nos quadrados dos catetos em qualquer tempo $t$ será igual ao volume de água no quadrado da hipotenusa no tempo $10-t$. Sendo essa mais uma prova do teorema.</p>
 </div>
-<hr>
 
-<p class="container">	
-	Para que seja feita a animação do experimento virtual, precisam ser calculados os $\Delta L$, eles são importantes para encontrar a distância de um ponto relevante do quadrado até a água. O $\Delta L1$ 
-	$$ \Delta L1 = \sqrt{2\frac{vt}{\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
-	$$ \Delta L2 = -\frac{\Delta L1}{2}+\frac{vt}{\Delta L1\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
-	$$ \Delta L3 = -\frac{\Delta L1}{2}\frac{sin{\alpha}}{\sin{\beta}}+\frac{vt}{\Delta L1\sin{\beta}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
-	$$ \Delta L4 = \sqrt{\frac{2hyp^2-2vt}{sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
-</p>
+<div align="center">
+	<a href="explanation.html" target="_blank">Clique aqui para ver a explicação matemática!</a>
+</div>
 
 <script src="final-project.js"></script>
 </body>
