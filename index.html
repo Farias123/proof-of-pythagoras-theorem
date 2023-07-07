@@ -8,7 +8,7 @@
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
 	<link rel="stylesheet" type="text/css" href="final-project.css" media="screen"/>
-	<link rel="icon" href="icon.png">
+	<link rel="icon" href="images/icon.png">
 	<title id="title">Teorema de Pitágoras</title>
 </head>
 
@@ -38,11 +38,11 @@
 
 	<div class="container" align="center">
 		<div class="bar" align="left">
-			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" value="150">	
+			<input type="range" min="15" max="150" id="cathetus1" onInput="update()" onChange="drawGraph()" value="150">	
 		</div>
 
 		<div class="bar" align="right">
-			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" value="150">	
+			<input type="range" min="15" max="150" id="cathetus2" onInput="update()" onChange="drawGraph()" value="150">	
 		</div>
 	</div>
 
@@ -53,15 +53,15 @@
 <hr>
 
 <div class="container">	
-	<p align="center">Abaixo você pode conferir os gráficos de volume nos quadrados em função do tempo:</p>
+	<p>Abaixo você pode conferir o gráfico de volume nos quadrados em função do tempo (o gráfico é desenhado somente ao soltar a barra que determina o tamanho dos catetos):</p>
 	<div class="container" align="center" id="chart"></div>
+	<p>Note que a soma do volume da água nos quadrados dos catetos em qualquer tempo $t$ será igual ao volume de água no quadrado da hipotenusa no tempo $10-t$. Sendo essa mais uma prova do teorema.</p>
 </div>
-<hr>
-<!--
-<p>	$$  \Delta L1 = \sqrt{2\frac{vt}{\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})}} $$
-	$$ \Delta L2 = -\frac{\Delta L1}{2}+\frac{vt}{\Delta L1\sin{\alpha}(\cos{\alpha}+\sin{\alpha}\cot{\beta})} $$
-</p>
--->
+
+<div align="center">
+	<a href="explanation.html" target="_blank">Clique aqui para ver a explicação matemática!</a>
+</div>
+
 <script src="final-project.js"></script>
 </body>
 
